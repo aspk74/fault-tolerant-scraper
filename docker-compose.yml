@@ -1,0 +1,16 @@
+version: '3'
+services:
+  scraper:
+    build: .
+    volumes:
+      - ./data:/app/data
+    environment:
+      - SCRAPY_PROJECT=scraper
+    command: scrapy crawl robust -o /app/data/output.json
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus-config:/etc/prometheus
